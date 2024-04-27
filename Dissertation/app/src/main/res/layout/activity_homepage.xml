@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    tools:context=".Homepage">
+
+    <!-- Welcome message for the patient -->
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolBar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize">
+    <TextView
+        android:id="@+id/pName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="24sp" />
+</androidx.appcompat.widget.Toolbar>
+
+    <!-- Health Button -->
+    <androidx.appcompat.widget.AppCompatButton
+        android:layout_marginTop="70dp"
+        android:id="@+id/heal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/round_button"
+        android:text="Health"
+        android:textSize="30dp"
+        android:drawableTop="@drawable/health"
+        android:gravity="center_horizontal"
+        android:paddingTop="50dp"
+        android:textStyle="bold" />
+
+    <!-- Fitness Button -->
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/fitt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="70dp"
+        android:background="@drawable/round_button"
+        android:drawableTop="@drawable/sv"
+        android:text="Fitness"
+        android:textSize="30dp"
+        android:gravity="center_horizontal"
+        android:paddingTop="50dp"
+        android:textStyle="bold" />
+
+</LinearLayout>

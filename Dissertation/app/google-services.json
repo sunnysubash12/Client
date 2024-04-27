@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "442614142664",
+    "project_id": "healthapp-f3894",
+    "storage_bucket": "healthapp-f3894.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:442614142664:android:ddeccd5afc1305f24f77fd",
+        "android_client_info": {
+          "package_name": "com.example.dissertation"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC6K_6a_fWcrA5UXie9M4V_t6Ml6iofyOE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
