@@ -12,7 +12,7 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
-
+import android.content.SharedPreferences;
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -112,6 +112,7 @@ public class MainActivity extends AppCompatActivity{
                         String token = response.getString("token");
                         // Proceed with token
                         handleSuccessfulLogin(token, Username);
+                        Log.d("token", token);
 
                     } else {
                         // Invalid credentials
@@ -144,6 +145,9 @@ public class MainActivity extends AppCompatActivity{
     // Method to handle successful login
     private void handleSuccessfulLogin(String token, String user) {
         Toast.makeText(getApplicationContext(), "Login successful", Toast.LENGTH_SHORT).show();
+        // Store the JWT token for future use
+        saveTokenToSharedPreferences(token);
+        //move to next activity
         Intent id = new Intent(getApplicationContext(), Homepage.class);
         id.putExtra("USER", user);
         id.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -160,6 +164,17 @@ public class MainActivity extends AppCompatActivity{
     // Method to handle error response
     private void handleErrorResponse(String message) {
         Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
+    }
+
+    // Method to save the JWT token to SharedPreferences
+    private void saveTokenToSharedPreferences(String token) {
+        // Get SharedPreferences instance
+        SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", MODE_PRIVATE);
+
+        // Save the token to SharedPreferences
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString("JWT_TOKEN", token);
+        editor.apply();
     }
 
 

@@ -1,5 +1,6 @@
 package com.example.dissertation;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -11,6 +12,7 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -22,7 +24,9 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Fitness extends AppCompatActivity {
     ImageView Home;
@@ -30,6 +34,7 @@ public class Fitness extends AppCompatActivity {
     CardView cardView;
     List<UserList> exerciseList;
     String url1 = "https://healthapp-env.eba-83ymjihv.eu-west-2.elasticbeanstalk.com/exercises";
+    String jwtToken;
     RecyclerView.Adapter adapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +52,8 @@ public class Fitness extends AppCompatActivity {
                 finish();
             }
         });
+        SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", MODE_PRIVATE);
+        jwtToken = sharedPreferences.getString("JWT_TOKEN", "");
         SSLUtils.initializeSSL(getApplicationContext());
 
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url1, new Response.Listener<String>() {
@@ -81,7 +88,15 @@ public class Fitness extends AppCompatActivity {
 
             }
 
-        });
+        }){
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                // Add JWT token to request headers
+                Map<String, String> headers = new HashMap<>();
+                headers.put("Authorization", jwtToken);
+                return headers;
+            }
+        };
         RequestQueue requestQueue1 = Volley.newRequestQueue(getApplicationContext());
         requestQueue1.add(stringRequest);
     }

@@ -1,6 +1,7 @@
 package com.example.dissertation;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -9,6 +10,7 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -18,8 +20,11 @@ import com.android.volley.toolbox.Volley;
 
 import org.json.JSONObject;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class Profile extends AppCompatActivity {
-    String userName;
+    String userName,jwtToken;
     String url;
     TextView name, gendeer, agge,num,address,history,allergy;
     ImageView Home;
@@ -38,6 +43,9 @@ public class Profile extends AppCompatActivity {
         Intent next=getIntent();
         userName=next.getStringExtra("user");
         url = "https://healthapp-env.eba-83ymjihv.eu-west-2.elasticbeanstalk.com/fetchProfile/"+userName;
+        // Retrieve JWT token from SharedPreferences
+        SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", MODE_PRIVATE);
+        jwtToken = sharedPreferences.getString("JWT_TOKEN", "");
         SSLUtils.initializeSSL(getApplicationContext());
         Home.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -83,7 +91,15 @@ public class Profile extends AppCompatActivity {
 
             }
 
-        });
+        }){
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                // Add JWT token to request headers
+                Map<String, String> headers = new HashMap<>();
+                headers.put("Authorization", jwtToken);
+                return headers;
+            }
+        };
         RequestQueue requestQueue1 = Volley.newRequestQueue(getApplicationContext());
         requestQueue1.add(stringRequest);
     }
